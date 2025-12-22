@@ -2,8 +2,7 @@ import Foundation
 import WidgetKit
 
 struct SharedData {
-    // TODO: User must replace this with their actual App Group ID
-    static let appGroupId = "group.com.example.PixelPal"
+    static let appGroupId = "group.com.pixelpalfit.app"
     
     struct Keys {
         static let avatarState = "avatarState"

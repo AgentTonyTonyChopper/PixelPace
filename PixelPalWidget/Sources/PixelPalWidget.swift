@@ -61,9 +61,6 @@ struct PixelPalWidgetEntryView : View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
         }
-        .containerBackground(for: .widget) {
-            Color.black
-        }
     }
     
     func imageForState(_ state: AvatarState, frame: Int) -> UIImage {

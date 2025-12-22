@@ -1,0 +1,523 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		573661548BC773E345D6E7B7 /* AvatarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31111F67A20DEA73284CFADE /* AvatarState.swift */; };
+		619550A947B1C104E1BE8F2E /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2653A27B8EC65641F8E05113 /* AvatarView.swift */; };
+		725852DFA9CD2C6530EC5382 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADAF4175CCA880FD8360146 /* Assets.xcassets */; };
+		9D06169DC5A0A607C2E17868 /* PixelPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F482259C11E0395EAF877 /* PixelPalApp.swift */; };
+		9DC11070A2086F6D12805C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADAF4175CCA880FD8360146 /* Assets.xcassets */; };
+		A11B91BA815EE5EE92A64BEA /* AvatarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31111F67A20DEA73284CFADE /* AvatarState.swift */; };
+		A770905C6C15C185B6C3E239 /* PixelPalWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E7F4E2C23ABF9DC1488D48D1 /* PixelPalWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B3A35534E37A839317E0EF6F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E519BE6660525645B147F2 /* OnboardingView.swift */; };
+		C1C340D388C5BBE62157941C /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7D59972E31E79CE571CE4 /* SharedData.swift */; };
+		C4F94B8F1FB8CEA13AB72A8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5542166A0FFA6D6A68D08619 /* ContentView.swift */; };
+		D399A6764170BB79F3E1D50B /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7D59972E31E79CE571CE4 /* SharedData.swift */; };
+		DF73DA9586670CB2AC0E33A6 /* PixelPalWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA88720284FDF04E6199B7F1 /* PixelPalWidget.swift */; };
+		F21FAFDCE4A55D883F18EED3 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D7A15A9E35F8F26F6494F6 /* HealthKitManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8C2824CA4E9502B22F28EBAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 706C4F3BA2C05C8B51811522 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D526B4E282440742DE86C580;
+			remoteInfo = PixelPalWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		004D9E81C1D56241C0C5A479 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A770905C6C15C185B6C3E239 /* PixelPalWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		14D7A15A9E35F8F26F6494F6 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		2653A27B8EC65641F8E05113 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		31111F67A20DEA73284CFADE /* AvatarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarState.swift; sourceTree = "<group>"; };
+		3AEE1BB9935EE63BBFF36B65 /* PixelPal.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PixelPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FA7D59972E31E79CE571CE4 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		5542166A0FFA6D6A68D08619 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7FA22598690D7C0D49A27547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		99FF220DED6D751C948CDF10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B9E519BE6660525645B147F2 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		BF3F482259C11E0395EAF877 /* PixelPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalApp.swift; sourceTree = "<group>"; };
+		CA88720284FDF04E6199B7F1 /* PixelPalWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalWidget.swift; sourceTree = "<group>"; };
+		DADAF4175CCA880FD8360146 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E7F4E2C23ABF9DC1488D48D1 /* PixelPalWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PixelPalWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		178071B9474A415D2F3BC1A7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				73A4E452D5D66A90605C1478 /* App */,
+				4A42C604DCF3CDECC838D173 /* Core */,
+				1E06669EFF5A478A76DC6D95 /* Views */,
+			);
+			name = Sources;
+			path = PixelPal/Sources;
+			sourceTree = "<group>";
+		};
+		1E06669EFF5A478A76DC6D95 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2653A27B8EC65641F8E05113 /* AvatarView.swift */,
+				5542166A0FFA6D6A68D08619 /* ContentView.swift */,
+				B9E519BE6660525645B147F2 /* OnboardingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2CD5640EB3415C4ECACD44C8 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CA88720284FDF04E6199B7F1 /* PixelPalWidget.swift */,
+			);
+			name = Sources;
+			path = PixelPalWidget/Sources;
+			sourceTree = "<group>";
+		};
+		3024BA8FD76C44C9AE7BB63B = {
+			isa = PBXGroup;
+			children = (
+				F8174B17480BB6B82ED3987B /* Resources */,
+				4490967256EFF6C8D3069434 /* Resources */,
+				178071B9474A415D2F3BC1A7 /* Sources */,
+				2CD5640EB3415C4ECACD44C8 /* Sources */,
+				B8A9234D9210D32469B35406 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4490967256EFF6C8D3069434 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7FA22598690D7C0D49A27547 /* Info.plist */,
+			);
+			name = Resources;
+			path = PixelPalWidget/Resources;
+			sourceTree = "<group>";
+		};
+		4A42C604DCF3CDECC838D173 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				31111F67A20DEA73284CFADE /* AvatarState.swift */,
+				14D7A15A9E35F8F26F6494F6 /* HealthKitManager.swift */,
+				3FA7D59972E31E79CE571CE4 /* SharedData.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		73A4E452D5D66A90605C1478 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BF3F482259C11E0395EAF877 /* PixelPalApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B8A9234D9210D32469B35406 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AEE1BB9935EE63BBFF36B65 /* PixelPal.app */,
+				E7F4E2C23ABF9DC1488D48D1 /* PixelPalWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8174B17480BB6B82ED3987B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DADAF4175CCA880FD8360146 /* Assets.xcassets */,
+				99FF220DED6D751C948CDF10 /* Info.plist */,
+			);
+			name = Resources;
+			path = PixelPal/Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D526B4E282440742DE86C580 /* PixelPalWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2DD85F798454BDD2EC2B576 /* Build configuration list for PBXNativeTarget "PixelPalWidget" */;
+			buildPhases = (
+				72E435974E70AB0BA734540D /* Sources */,
+				C238E29033C4B6011694C5CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PixelPalWidget;
+			packageProductDependencies = (
+			);
+			productName = PixelPalWidget;
+			productReference = E7F4E2C23ABF9DC1488D48D1 /* PixelPalWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D813A78C05B89466AA1BF83C /* PixelPal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE52C7CD91E39DE0AE55DF89 /* Build configuration list for PBXNativeTarget "PixelPal" */;
+			buildPhases = (
+				9CA167F250BB389F27E49957 /* Sources */,
+				369AF7CC69ECBACF29A4253E /* Resources */,
+				004D9E81C1D56241C0C5A479 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FBBA04FE57B689364F910C59 /* PBXTargetDependency */,
+			);
+			name = PixelPal;
+			packageProductDependencies = (
+			);
+			productName = PixelPal;
+			productReference = 3AEE1BB9935EE63BBFF36B65 /* PixelPal.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		706C4F3BA2C05C8B51811522 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					D526B4E282440742DE86C580 = {
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = YES;
+							};
+						};
+					};
+					D813A78C05B89466AA1BF83C = {
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = YES;
+							};
+							com.apple.HealthKit = {
+								enabled = YES;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 7C1EDF9B9EC014885D213A2D /* Build configuration list for PBXProject "PixelPal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3024BA8FD76C44C9AE7BB63B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D813A78C05B89466AA1BF83C /* PixelPal */,
+				D526B4E282440742DE86C580 /* PixelPalWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		369AF7CC69ECBACF29A4253E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DC11070A2086F6D12805C7D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C238E29033C4B6011694C5CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				725852DFA9CD2C6530EC5382 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		72E435974E70AB0BA734540D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				573661548BC773E345D6E7B7 /* AvatarState.swift in Sources */,
+				DF73DA9586670CB2AC0E33A6 /* PixelPalWidget.swift in Sources */,
+				D399A6764170BB79F3E1D50B /* SharedData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CA167F250BB389F27E49957 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A11B91BA815EE5EE92A64BEA /* AvatarState.swift in Sources */,
+				619550A947B1C104E1BE8F2E /* AvatarView.swift in Sources */,
+				C4F94B8F1FB8CEA13AB72A8A /* ContentView.swift in Sources */,
+				F21FAFDCE4A55D883F18EED3 /* HealthKitManager.swift in Sources */,
+				B3A35534E37A839317E0EF6F /* OnboardingView.swift in Sources */,
+				9D06169DC5A0A607C2E17868 /* PixelPalApp.swift in Sources */,
+				C1C340D388C5BBE62157941C /* SharedData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FBBA04FE57B689364F910C59 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D526B4E282440742DE86C580 /* PixelPalWidget */;
+			targetProxy = 8C2824CA4E9502B22F28EBAE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		126887CF7CF9ECC1762E4F43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		12E93D6198CC6E2DEEB0C97B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		20D046F1CE3D6489DCE9D49D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5065C0342C5948EACB2777FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		7A6928C2AB014C1EE69F2BE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		CDC5A26FEAB09696A4989B80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7C1EDF9B9EC014885D213A2D /* Build configuration list for PBXProject "PixelPal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5065C0342C5948EACB2777FE /* Debug */,
+				7A6928C2AB014C1EE69F2BE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A2DD85F798454BDD2EC2B576 /* Build configuration list for PBXNativeTarget "PixelPalWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				126887CF7CF9ECC1762E4F43 /* Debug */,
+				12E93D6198CC6E2DEEB0C97B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FE52C7CD91E39DE0AE55DF89 /* Build configuration list for PBXNativeTarget "PixelPal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDC5A26FEAB09696A4989B80 /* Debug */,
+				20D046F1CE3D6489DCE9D49D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 706C4F3BA2C05C8B51811522 /* Project object */;
+}
