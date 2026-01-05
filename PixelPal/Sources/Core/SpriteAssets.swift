@@ -23,6 +23,29 @@ struct SpriteAssets {
         return "\(genderRaw)_\(stateRaw)_\(frame)"
     }
 
+    /// Generates the asset catalog name for a walking sprite.
+    /// - Parameters:
+    ///   - gender: The character's gender.
+    ///   - frame: The animation frame (1-8).
+    /// - Returns: Asset name string matching the catalog entry.
+    static func walkingSpriteName(gender: Gender, frame: Int) -> String {
+        let clampedFrame = max(1, min(8, frame))
+        return "\(gender.rawValue)_walking_\(clampedFrame)"
+    }
+
+    /// Generates walking sprite name from raw string values (for use in extensions).
+    /// - Parameters:
+    ///   - genderRaw: Raw gender string ("male" or "female").
+    ///   - frame: The animation frame (1-8).
+    /// - Returns: Asset name string.
+    static func walkingSpriteName(genderRaw: String, frame: Int) -> String {
+        let clampedFrame = max(1, min(8, frame))
+        return "\(genderRaw)_walking_\(clampedFrame)"
+    }
+
+    /// Total number of walking animation frames.
+    static let walkingFrameCount = 8
+
     /// All expected asset names for validation.
     static var allAssetNames: [String] {
         var names: [String] = []
@@ -31,6 +54,10 @@ struct SpriteAssets {
                 for frame in 1...2 {
                     names.append(spriteName(gender: gender, state: state, frame: frame))
                 }
+            }
+            // Walking sprites
+            for frame in 1...walkingFrameCount {
+                names.append(walkingSpriteName(gender: gender, frame: frame))
             }
         }
         return names

@@ -15,11 +15,19 @@ struct PixelPalAttributes: ActivityAttributes {
         /// Raw gender string: "male" or "female".
         var genderRaw: String
 
+        /// Whether the user is currently walking (steps increasing).
+        var isWalking: Bool
+
+        /// Current walking animation frame (1-8) when walking.
+        var walkingFrame: Int
+
         /// Convenience initializer from typed values.
-        init(steps: Int, state: AvatarState, gender: Gender) {
+        init(steps: Int, state: AvatarState, gender: Gender, isWalking: Bool = false, walkingFrame: Int = 1) {
             self.steps = steps
             self.stateRaw = state.rawValue
             self.genderRaw = gender.rawValue
+            self.isWalking = isWalking
+            self.walkingFrame = walkingFrame
         }
 
         /// Convenience accessor for state enum.
