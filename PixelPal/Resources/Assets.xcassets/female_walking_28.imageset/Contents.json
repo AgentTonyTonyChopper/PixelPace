@@ -1,0 +1,13 @@
+{
+  "images" : [
+    {
+      "filename" : "female_walking_28.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

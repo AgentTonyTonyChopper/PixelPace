@@ -5,10 +5,12 @@ struct SharedData {
     static let appGroupId = "group.com.pixelpalfit.app"
 
     struct Keys {
+        static let suiteName = appGroupId
         static let avatarState = "avatarState"
         static let lastUpdateDate = "lastUpdateDate"
         static let currentSteps = "currentSteps"
         static let gender = "gender"
+        static let currentPhase = "currentPhase"
     }
 
     static var userDefaults: UserDefaults? {
@@ -17,14 +19,29 @@ struct SharedData {
 
     // MARK: - State
 
-    static func saveState(state: AvatarState, steps: Double) {
+    static func saveState(state: AvatarState, steps: Double, phase: Int = 1) {
         guard let defaults = userDefaults else { return }
         defaults.set(state.rawValue, forKey: Keys.avatarState)
         defaults.set(steps, forKey: Keys.currentSteps)
+        defaults.set(phase, forKey: Keys.currentPhase)
         defaults.set(Date(), forKey: Keys.lastUpdateDate)
 
         // Reload widget
         WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    static func savePhase(_ phase: Int) {
+        guard let defaults = userDefaults else { return }
+        defaults.set(phase, forKey: Keys.currentPhase)
+
+        // Reload widget
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    static func loadPhase() -> Int {
+        guard let defaults = userDefaults else { return 1 }
+        let phase = defaults.integer(forKey: Keys.currentPhase)
+        return phase > 0 ? phase : 1  // Default to phase 1
     }
 
     static func loadState() -> AvatarState {

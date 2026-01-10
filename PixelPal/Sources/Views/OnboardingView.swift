@@ -1,82 +1,171 @@
 import SwiftUI
 
+/// 5-screen onboarding flow (v1.1 spec).
+/// 1. Identity Hook - "Your steps tell a story"
+/// 2. Character Selection - Gender + starter style
+/// 3. Truth Moment - Step benchmarks
+/// 4. Differentiation - "Not another step counter"
+/// 5. Permissions - HealthKit request
 struct OnboardingView: View {
     @EnvironmentObject var healthManager: HealthKitManager
+    @State private var currentStep: Int = 1
     @State private var selectedGender: Gender? = nil
-    @State private var showHealthKitStep = false
+    @State private var selectedStyle: String = "default"
 
     var body: some View {
-        VStack(spacing: 30) {
-            Spacer()
+        ZStack {
+            Color.black.ignoresSafeArea()
 
-            Text("Pixel Pal")
-                .font(.largeTitle)
+            VStack(spacing: 0) {
+                // Progress indicator
+                ProgressIndicator(currentStep: currentStep, totalSteps: 5)
+                    .padding(.top, 20)
+                    .padding(.horizontal, 40)
+
+                Spacer()
+
+                // Current screen content
+                Group {
+                    switch currentStep {
+                    case 1:
+                        IdentityHookScreen(onContinue: { nextStep() })
+                    case 2:
+                        CharacterSelectionScreen(
+                            selectedGender: $selectedGender,
+                            selectedStyle: $selectedStyle,
+                            onContinue: { nextStep() }
+                        )
+                    case 3:
+                        TruthMomentScreen(onContinue: { nextStep() })
+                    case 4:
+                        DifferentiationScreen(onContinue: { nextStep() })
+                    case 5:
+                        PermissionsScreen(
+                            selectedGender: selectedGender,
+                            selectedStyle: selectedStyle,
+                            healthManager: healthManager
+                        )
+                    default:
+                        EmptyView()
+                    }
+                }
+                .transition(.asymmetric(
+                    insertion: .move(edge: .trailing).combined(with: .opacity),
+                    removal: .move(edge: .leading).combined(with: .opacity)
+                ))
+
+                Spacer()
+            }
+        }
+    }
+
+    private func nextStep() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            currentStep += 1
+        }
+    }
+}
+
+// MARK: - Progress Indicator
+
+private struct ProgressIndicator: View {
+    let currentStep: Int
+    let totalSteps: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(1...totalSteps, id: \.self) { step in
+                Capsule()
+                    .fill(step <= currentStep ? Color.white : Color.white.opacity(0.3))
+                    .frame(height: 4)
+            }
+        }
+    }
+}
+
+// MARK: - Screen 1: Identity Hook
+
+private struct IdentityHookScreen: View {
+    let onContinue: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            // Animated character preview
+            Image("male_neutral_1")
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+
+            Text("Your steps tell a story")
+                .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
 
-            Text("Your ambient walking companion.")
+            Text("PixelPal turns movement into a living character you see all day.")
                 .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal)
+                .padding(.horizontal, 40)
 
-            Spacer()
+            // Mock Dynamic Island preview
+            DynamicIslandPreview()
+                .padding(.vertical, 20)
 
-            if !showHealthKitStep {
-                // Step 1: Gender Selection
-                genderSelectionView
-            } else {
-                // Step 2: HealthKit Permission
-                healthKitPermissionView
-            }
+            Spacer().frame(height: 40)
+
+            OnboardingButton(title: "Start my PixelPal", action: onContinue)
         }
-        .background(Color.black)
+        .padding(.horizontal, 24)
     }
+}
 
-    // MARK: - Gender Selection Step
+// MARK: - Screen 2: Character Selection
 
-    private var genderSelectionView: some View {
+private struct CharacterSelectionScreen: View {
+    @Binding var selectedGender: Gender?
+    @Binding var selectedStyle: String
+    let onContinue: () -> Void
+
+    var body: some View {
         VStack(spacing: 24) {
-            Text("Choose your Pixel Pal")
-                .font(.headline)
-                .foregroundColor(.white.opacity(0.8))
+            Text("Choose your PixelPal")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
 
+            Text("This character grows when you move.")
+                .font(.body)
+                .foregroundColor(.gray)
+
+            // Gender selection
             HStack(spacing: 40) {
-                genderButton(for: .male)
-                genderButton(for: .female)
+                GenderButton(gender: .male, isSelected: selectedGender == .male) {
+                    selectedGender = .male
+                }
+                GenderButton(gender: .female, isSelected: selectedGender == .female) {
+                    selectedGender = .female
+                }
             }
+            .padding(.vertical, 20)
 
             if selectedGender != nil {
-                Button(action: {
-                    if let gender = selectedGender {
-                        SharedData.saveGender(gender)
-                        withAnimation {
-                            showHealthKitStep = true
-                        }
-                    }
-                }) {
-                    Text("Continue")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                }
-                .padding(.horizontal, 40)
+                OnboardingButton(title: "Continue", action: onContinue)
             }
         }
-        .padding(.bottom, 50)
+        .padding(.horizontal, 24)
     }
+}
 
-    private func genderButton(for gender: Gender) -> some View {
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                selectedGender = gender
-            }
-        }) {
+private struct GenderButton: View {
+    let gender: Gender
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
             VStack(spacing: 12) {
-                // Preview sprite (using neutral state, frame 1)
                 Image(SpriteAssets.spriteName(gender: gender, state: .neutral, frame: 1))
                     .interpolation(.none)
                     .resizable()
@@ -90,20 +179,136 @@ struct OnboardingView: View {
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(
-                        selectedGender == gender ? Color.white : Color.white.opacity(0.3),
-                        lineWidth: selectedGender == gender ? 2 : 1
-                    )
+                    .stroke(isSelected ? Color.white : Color.white.opacity(0.3), lineWidth: isSelected ? 2 : 1)
             )
         }
     }
+}
 
-    // MARK: - HealthKit Permission Step
+// MARK: - Screen 3: Truth Moment
 
-    private var healthKitPermissionView: some View {
-        VStack(spacing: 20) {
+private struct TruthMomentScreen: View {
+    let onContinue: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "figure.walk")
+                .font(.system(size: 60))
+                .foregroundColor(.blue)
+
+            Text("Most people walk less than they think")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+
+            VStack(alignment: .leading, spacing: 16) {
+                StatRow(label: "Average American", value: "3,000-4,000", unit: "steps/day")
+                StatRow(label: "Recommended", value: "7,500-10,000", unit: "steps/day")
+                StatRow(label: "Highly active", value: "12,000+", unit: "steps/day")
+            }
+            .padding(.vertical, 20)
+
+            Text("PixelPal shows the truth in real time.")
+                .font(.body)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+
+            Spacer().frame(height: 20)
+
+            OnboardingButton(title: "Continue", action: onContinue)
+        }
+        .padding(.horizontal, 24)
+    }
+}
+
+private struct StatRow: View {
+    let label: String
+    let value: String
+    let unit: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            Spacer()
+            Text(value)
+                .font(.headline)
+                .foregroundColor(.white)
+            Text(unit)
+                .font(.caption)
+                .foregroundColor(.gray)
+        }
+        .padding(.horizontal, 20)
+    }
+}
+
+// MARK: - Screen 4: Differentiation
+
+private struct DifferentiationScreen: View {
+    let onContinue: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 50))
+                .foregroundColor(.purple)
+
+            Text("This isn't another step counter")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+
+            VStack(alignment: .leading, spacing: 20) {
+                FeatureRow(icon: "arrow.up.circle.fill", color: .green,
+                           text: "Evolves as you walk")
+                FeatureRow(icon: "iphone.badge.play", color: .blue,
+                           text: "Lives in Dynamic Island and Lock Screen")
+                FeatureRow(icon: "bell.slash.fill", color: .orange,
+                           text: "Motivation without notifications")
+            }
+            .padding(.vertical, 20)
+
+            Spacer().frame(height: 20)
+
+            OnboardingButton(title: "Continue", action: onContinue)
+        }
+        .padding(.horizontal, 24)
+    }
+}
+
+private struct FeatureRow: View {
+    let icon: String
+    let color: Color
+    let text: String
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundColor(color)
+                .frame(width: 32)
+            Text(text)
+                .font(.body)
+                .foregroundColor(.white)
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+    }
+}
+
+// MARK: - Screen 5: Permissions
+
+private struct PermissionsScreen: View {
+    let selectedGender: Gender?
+    let selectedStyle: String
+    let healthManager: HealthKitManager
+
+    var body: some View {
+        VStack(spacing: 24) {
             if let gender = selectedGender {
-                // Show selected character
                 Image(SpriteAssets.spriteName(gender: gender, state: .vital, frame: 1))
                     .interpolation(.none)
                     .resizable()
@@ -111,29 +316,94 @@ struct OnboardingView: View {
                     .frame(width: 80, height: 80)
             }
 
-            Text("Let's get moving!")
-                .font(.headline)
-                .foregroundColor(.white.opacity(0.8))
+            Text("Let PixelPal walk with you")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
 
-            Text("Pixel Pal needs access to your step count to reflect your daily energy.")
-                .font(.caption)
+            Text("We only use steps to evolve your character.\nNo data leaves your device.")
+                .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
+                .padding(.horizontal, 20)
 
-            Button(action: {
-                healthManager.requestAuthorization { _ in }
-            }) {
-                Text("Connect HealthKit")
-                    .font(.headline)
-                    .foregroundColor(.black)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.white)
-                    .cornerRadius(12)
+            // Privacy assurance
+            HStack(spacing: 8) {
+                Image(systemName: "lock.shield.fill")
+                    .foregroundColor(.green)
+                Text("100% Private")
+                    .font(.caption)
+                    .foregroundColor(.green)
             }
-            .padding(.horizontal, 40)
+            .padding(.vertical, 10)
+
+            Spacer().frame(height: 20)
+
+            OnboardingButton(title: "Enable Steps") {
+                completeOnboarding()
+            }
         }
-        .padding(.bottom, 50)
+        .padding(.horizontal, 24)
+    }
+
+    private func completeOnboarding() {
+        guard let gender = selectedGender else { return }
+
+        // Create user profile
+        let profile = UserProfile.createNew(gender: gender, starterStyle: selectedStyle)
+        Task { @MainActor in
+            PersistenceManager.shared.saveUserProfile(profile)
+        }
+
+        // Also save to legacy SharedData for backward compatibility
+        SharedData.saveGender(gender)
+
+        // Request HealthKit authorization
+        healthManager.requestAuthorization { _ in }
+    }
+}
+
+// MARK: - Shared Components
+
+private struct OnboardingButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.black)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .cornerRadius(12)
+        }
+        .padding(.horizontal, 40)
+    }
+}
+
+private struct DynamicIslandPreview: View {
+    var body: some View {
+        // Mock Dynamic Island shape
+        HStack(spacing: 12) {
+            // Camera cutout
+            Circle()
+                .fill(Color.black)
+                .frame(width: 12, height: 12)
+
+            // Character preview
+            Image("male_neutral_1")
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            Capsule()
+                .fill(Color.white.opacity(0.1))
+        )
     }
 }

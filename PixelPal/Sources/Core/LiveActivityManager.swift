@@ -13,11 +13,17 @@ class LiveActivityManager: ObservableObject {
     /// Previous step count to detect walking.
     private var previousSteps: Int = 0
 
-    /// Current walking animation frame (1-8).
+    /// Previous cumulative steps for milestone detection.
+    private var previousCumulativeSteps: Int = 0
+
+    /// Current walking animation frame (1-32).
     private var currentWalkingFrame: Int = 1
 
     /// Timer for walking animation updates.
     private var walkingTimer: Timer?
+
+    /// Timer for clearing milestone celebration.
+    private var milestoneTimer: Timer?
 
     /// Whether currently in walking state.
     private var isWalking: Bool = false
@@ -27,6 +33,12 @@ class LiveActivityManager: ObservableObject {
 
     /// Current avatar state for updates.
     private var currentState: AvatarState = .low
+
+    /// Current evolution phase (1-4).
+    private var currentPhase: Int = 1
+
+    /// Current milestone text being displayed (nil when not celebrating).
+    private var currentMilestone: String?
 
     init() {
         // Check for any existing activities on launch
@@ -43,10 +55,11 @@ class LiveActivityManager: ObservableObject {
 
     /// Starts a new Live Activity with the given state.
     /// - Parameters:
-    ///   - steps: Current step count.
+    ///   - steps: Current step count (today).
     ///   - state: Current avatar state.
     ///   - gender: Selected gender.
-    func startActivity(steps: Int, state: AvatarState, gender: Gender) {
+    ///   - phase: Current evolution phase (1-4).
+    func startActivity(steps: Int, state: AvatarState, gender: Gender, phase: Int = 1) {
         // Check if Live Activities are supported
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("Live Activities are not enabled")
@@ -58,11 +71,19 @@ class LiveActivityManager: ObservableObject {
             endActivity()
         }
 
+        // Store current phase
+        currentPhase = phase
+
         let attributes = PixelPalAttributes()
         let contentState = PixelPalAttributes.ContentState(
             steps: steps,
             state: state,
-            gender: gender
+            gender: gender,
+            isWalking: false,
+            walkingFrame: 1,
+            currentPhase: phase,
+            milestoneText: nil,
+            showStepCount: false  // Idle state: no step count per UI rules
         )
 
         do {
@@ -81,19 +102,33 @@ class LiveActivityManager: ObservableObject {
 
     /// Updates the Live Activity with new state.
     /// - Parameters:
-    ///   - steps: Current step count.
+    ///   - steps: Current step count (today).
     ///   - state: Current avatar state.
     ///   - gender: Selected gender.
-    func updateActivity(steps: Int, state: AvatarState, gender: Gender) {
+    ///   - phase: Current evolution phase (1-4).
+    ///   - cumulativeSteps: Total cumulative steps (for milestone detection).
+    func updateActivity(steps: Int, state: AvatarState, gender: Gender, phase: Int = 1, cumulativeSteps: Int = 0) {
         guard let activity = currentActivity else {
             // No active activity, start one instead
-            startActivity(steps: steps, state: state, gender: gender)
+            startActivity(steps: steps, state: state, gender: gender, phase: phase)
             return
         }
 
         // Store current values for timer updates
         currentGender = gender
         currentState = state
+        currentPhase = phase
+
+        // Check for milestone (using cumulative steps)
+        if cumulativeSteps > previousCumulativeSteps {
+            if let milestone = MilestoneCalculator.checkMilestone(
+                previousSteps: previousCumulativeSteps,
+                currentSteps: cumulativeSteps
+            ) {
+                triggerMilestone(milestone, steps: steps)
+            }
+        }
+        previousCumulativeSteps = cumulativeSteps
 
         // Detect if user is walking (steps increased)
         let stepsIncreased = steps > previousSteps
@@ -106,13 +141,16 @@ class LiveActivityManager: ObservableObject {
             // Stop walking animation after a delay
             stopWalkingAnimation(steps: steps)
         } else if !isWalking {
-            // Normal update (not walking)
+            // Normal update (not walking) - idle state, no step count per UI rules
             let contentState = PixelPalAttributes.ContentState(
                 steps: steps,
                 state: state,
                 gender: gender,
                 isWalking: false,
-                walkingFrame: 1
+                walkingFrame: 1,
+                currentPhase: phase,
+                milestoneText: currentMilestone,
+                showStepCount: currentMilestone != nil  // Show during milestone celebration
             )
 
             Task {
@@ -120,6 +158,75 @@ class LiveActivityManager: ObservableObject {
                     ActivityContent(state: contentState, staleDate: nil)
                 )
             }
+        }
+    }
+
+    // MARK: - Milestone Celebration
+
+    /// Triggers a milestone celebration display.
+    private func triggerMilestone(_ milestone: Int, steps: Int) {
+        let milestoneText = MilestoneCalculator.formatMilestone(milestone)
+        currentMilestone = milestoneText
+
+        // Update immediately with milestone
+        updateMilestoneDisplay(steps: steps, milestoneText: milestoneText)
+
+        // Clear milestone after 3-5 seconds per UI rules
+        milestoneTimer?.invalidate()
+        milestoneTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.clearMilestone(steps: steps)
+            }
+        }
+
+        print("Milestone reached: \(milestoneText)")
+    }
+
+    /// Updates display with milestone text.
+    private func updateMilestoneDisplay(steps: Int, milestoneText: String) {
+        guard let activity = currentActivity else { return }
+
+        let contentState = PixelPalAttributes.ContentState(
+            steps: steps,
+            state: currentState,
+            gender: currentGender,
+            isWalking: isWalking,
+            walkingFrame: currentWalkingFrame,
+            currentPhase: currentPhase,
+            milestoneText: milestoneText,
+            showStepCount: true  // Always show during milestone
+        )
+
+        Task {
+            await activity.update(
+                ActivityContent(state: contentState, staleDate: nil)
+            )
+        }
+    }
+
+    /// Clears the milestone celebration.
+    private func clearMilestone(steps: Int) {
+        currentMilestone = nil
+        milestoneTimer?.invalidate()
+        milestoneTimer = nil
+
+        guard let activity = currentActivity else { return }
+
+        let contentState = PixelPalAttributes.ContentState(
+            steps: steps,
+            state: currentState,
+            gender: currentGender,
+            isWalking: isWalking,
+            walkingFrame: currentWalkingFrame,
+            currentPhase: currentPhase,
+            milestoneText: nil,
+            showStepCount: isWalking  // Only show if still walking
+        )
+
+        Task {
+            await activity.update(
+                ActivityContent(state: contentState, staleDate: nil)
+            )
         }
     }
 
@@ -131,9 +238,9 @@ class LiveActivityManager: ObservableObject {
         // Update immediately with walking state
         updateWalkingFrame(steps: steps)
 
-        // Start timer to cycle through frames
+        // Start timer to cycle through frames at 24fps (42ms per frame)
         walkingTimer?.invalidate()
-        walkingTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] _ in
+        walkingTimer = Timer.scheduledTimer(withTimeInterval: 0.042, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.advanceWalkingFrame(steps: steps)
             }
@@ -142,7 +249,7 @@ class LiveActivityManager: ObservableObject {
 
     /// Advances to the next walking frame.
     private func advanceWalkingFrame(steps: Int) {
-        currentWalkingFrame = (currentWalkingFrame % 8) + 1
+        currentWalkingFrame = (currentWalkingFrame % 32) + 1
         updateWalkingFrame(steps: steps)
     }
 
@@ -155,7 +262,10 @@ class LiveActivityManager: ObservableObject {
             state: currentState,
             gender: currentGender,
             isWalking: true,
-            walkingFrame: currentWalkingFrame
+            walkingFrame: currentWalkingFrame,
+            currentPhase: currentPhase,
+            milestoneText: currentMilestone,
+            showStepCount: true  // Show step count during walking per UI rules
         )
 
         Task {
@@ -178,7 +288,10 @@ class LiveActivityManager: ObservableObject {
             state: currentState,
             gender: currentGender,
             isWalking: false,
-            walkingFrame: 1
+            walkingFrame: 1,
+            currentPhase: currentPhase,
+            milestoneText: currentMilestone,
+            showStepCount: currentMilestone != nil  // Only show if celebrating milestone
         )
 
         Task {
@@ -194,6 +307,11 @@ class LiveActivityManager: ObservableObject {
         walkingTimer?.invalidate()
         walkingTimer = nil
         isWalking = false
+
+        // Stop milestone timer
+        milestoneTimer?.invalidate()
+        milestoneTimer = nil
+        currentMilestone = nil
 
         guard let activity = currentActivity else { return }
 
