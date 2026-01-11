@@ -45,6 +45,8 @@ struct ContentView: View {
         }
         .onChange(of: healthManager.isAuthorized) { authorized in
             if authorized {
+                // Reload saved data (including gender) after onboarding completes
+                loadSavedData()
                 healthManager.fetchData()
                 fetchCumulativeSteps()
             }
