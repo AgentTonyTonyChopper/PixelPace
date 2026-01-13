@@ -184,14 +184,6 @@ struct ContentView: View {
                     .foregroundColor(.gray)
             }
 
-            // Debug: Test Paywall (remove before App Store submission)
-            #if DEBUG
-            Button(action: { showPaywall = true }) {
-                Text("Test Paywall")
-                    .font(.caption2)
-                    .foregroundColor(.purple.opacity(0.6))
-            }
-            #endif
         }
     }
 
